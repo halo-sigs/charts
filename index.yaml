@@ -1,27 +1,58 @@
 apiVersion: v1
 entries:
   halo:
-  - apiVersion: v2
-    annotations:
+  - annotations:
       category: CMS
+    apiVersion: v2
     appVersion: 2.0.1
+    created: "2022-12-09T09:49:36.973326343Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.x.x
+    description: A Helm chart to deploy Halo
+    digest: 99cd02b3268ff0ebee08b2b12bd6d399160becf6cc9a3a63fcf45ed0ea3c5027
+    home: https://halo.run
+    icon: https://halo.run/logo
+    maintainers:
+    - email: halo-dev@halo.run
+      name: halo-dev
+    name: halo
+    sources:
+    - https://github.com/halo/
+    urls:
+    - https://github.com/wan92hen/halo-chart/releases/download/halo-1.0.0/halo-1.0.0.tgz
+    version: 1.0.0
+  - annotations:
+      category: CMS
+    apiVersion: v2
+    appVersion: 2.0.1
+    created: "0001-01-01T00:00:00Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.x.x
     description: A Helm chart to deploy Halo
     home: https://halo.run
     icon: https://halo.run/logo
     maintainers:
-      - email: halo-dev@halo.run
-        name: halo-dev
+    - email: halo-dev@halo.run
+      name: halo-dev
     name: halo
     sources:
-      - https://github.com/halo/
-    dependencies:
-      - name: common
-        repository: https://charts.bitnami.com/bitnami
-        tags:
-          - bitnami-common
-        version: 2.x.x
-      - name: postgresql
-        repository: https://charts.bitnami.com/bitnami
-        version: 12.x.x
-        condition: postgresql.enabled
+    - https://github.com/halo/
+    urls: null
     version: 0.0.0
+generated: "2022-12-09T09:49:36.973336243Z"
