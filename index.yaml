@@ -1,0 +1,27 @@
+apiVersion: v1
+entries:
+  halo:
+  - apiVersion: v2
+    annotations:
+      category: CMS
+    appVersion: 2.0.1
+    description: A Helm chart to deploy Halo
+    home: https://halo.run
+    icon: https://halo.run/logo
+    maintainers:
+      - email: halo-dev@halo.run
+        name: halo-dev
+    name: halo
+    sources:
+      - https://github.com/halo/
+    dependencies:
+      - name: common
+        repository: https://charts.bitnami.com/bitnami
+        tags:
+          - bitnami-common
+        version: 2.x.x
+      - name: postgresql
+        repository: https://charts.bitnami.com/bitnami
+        version: 12.x.x
+        condition: postgresql.enabled
+    version: 0.0.0
