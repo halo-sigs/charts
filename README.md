@@ -8,7 +8,7 @@
 
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
-helm repo add halo https://halo-sigs.github.io/helm-chart/
+helm repo add halo https://halo-sigs.github.io/charts/
 helm repo update  # 从 chart 仓库中更新本地可用chart的信息
 helm install halo halo/halo
 ```
