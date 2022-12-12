@@ -68,7 +68,6 @@ diagnosticMode:
 ## @param image.digest Halo image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
 ## @param image.pullPolicy Halo image pull policy
 ## @param image.pullSecrets Halo image pull secrets
-## @param image.debug Specify if debug values should be set
 ##
 image:
   registry: docker.io
@@ -128,6 +127,79 @@ extraEnvVarsCM: ""
 ## @param extraEnvVarsSecret Name of existing Secret containing extra env vars
 ##
 extraEnvVarsSecret: ""
+
+## @section Database Parameters
+##
+
+## PostgreSQL chart configuration
+## ref: https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
+##
+postgresql:
+  ## @param postgresql.enabled Deploy a PostgreSQL server to satisfy the applications database requirements
+  ## To use an external database set this to false and configure the `externalDatabase.*` parameters
+  ##
+  enabled: true
+  ## @param postgresql.architecture PostgreSQL architecture. Allowed values: `standalone` or `replication`
+  ##
+  architecture: standalone
+  ## PostgreSQL Authentication parameters
+  ## @param postgresql.auth.rootPassword PostgreSQL root password
+  ## @param postgresql.auth.database PostgreSQL custom database
+  ## @param postgresql.auth.username PostgreSQL custom user name
+  ## @param postgresql.auth.password PostgreSQL custom user password
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/postgresql#setting-the-root-password-on-first-run
+  ##      https://github.com/bitnami/containers/blob/main/bitnami/postgresql/README.md#creating-a-database-on-first-run
+  ##      https://github.com/bitnami/containers/blob/main/bitnami/postgresql/README.md#creating-a-database-user-on-first-run
+  ##
+  auth:
+    rootPassword: ""
+    database: halo
+    username: halo
+    password: ""
+  ## PostgreSQL Primary configuration
+  ##
+  primary:
+    ## PostgreSQL Primary Persistence parameters
+    ## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+    ## @param postgresql.primary.persistence.enabled Enable persistence on PostgreSQL using PVC(s)
+    ## @param postgresql.primary.persistence.storageClass Persistent Volume storage class
+    ## @param postgresql.primary.persistence.accessModes [array] Persistent Volume access modes
+    ## @param postgresql.primary.persistence.size Persistent Volume size
+    ##
+    persistence:
+      enabled: true
+      storageClass: ""
+      accessModes:
+        - ReadWriteOnce
+      size: 8Gi
+
+## External Database Configuration
+## All of these values are only used if `postgresql.enabled=false`
+##
+externalDatabase:
+  ## @param externalDatabase.platform External Database platform
+  ##
+  platform: postgresql
+  ## @param externalDatabase.host External Database server host
+  ##
+  host: ""
+  ## @param externalDatabase.port External Database server port
+  ##
+  port: ""
+  ## @param externalDatabase.user External Database username
+  ##
+  user: ""
+  ## @param externalDatabase.password External Database user password
+  ##
+  password: ""
+  ## @param externalDatabase.database External Database database name
+  ##
+  database: ""
+  ## @param externalDatabase.existingSecret The name of an existing secret with database credentials. Evaluated as a template
+  ## NOTE: Must contain key `database-password`
+  ## NOTE: When it's set, the `externalDatabase.password` parameter is ignored
+  ##
+  existingSecret: ""
 
 ## @section Halo deployment parameters
 ##
@@ -271,7 +343,6 @@ extraContainerPorts: []
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ## @param podSecurityContext.enabled Enabled Halo pods' Security Context
 ## @param podSecurityContext.fsGroup Set Halo pod's Security Context fsGroup
-## @param podSecurityContext.seccompProfile.type Set Halo container's Security Context seccomp profile
 ##
 podSecurityContext:
   enabled: true
@@ -403,13 +474,11 @@ service:
   ##
   type: NodePort
   ## @param service.ports.http Halo service HTTP port
-  ## @param service.ports.https Halo service HTTPS port
   ##
   ports:
     http: 80
   ## Node ports to expose
   ## @param service.nodePorts.http Node port for HTTP
-  ## @param service.nodePorts.https Node port for HTTPS
   ## NOTE: choose port between <30000-32767>
   ##
   nodePorts:
@@ -710,7 +779,7 @@ networkPolicy:
     ##   label: ingress
     ##
     namespaceSelector: {}
-  ## @param networkPolicy.ingressRules.backendOnlyAccessibleByFrontend Enable ingress rule that makes the backend (mariadb) only accessible by testlink's pods.
+  ## @param networkPolicy.ingressRules.backendOnlyAccessibleByFrontend Enable ingress rule that makes the backend (postgresql) only accessible by testlink's pods.
   ## @param networkPolicy.ingressRules.customBackendSelector [object] Backend selector labels. These labels will be used to identify the backend pods.
   ## @param networkPolicy.ingressRules.accessOnlyFrom.enabled Enable ingress rule that makes testlink only accessible from a particular origin
   ## @param networkPolicy.ingressRules.accessOnlyFrom.namespaceSelector [object] Namespace selector label that is allowed to access testlink. This label will be used to identified the allowed namespace(s).
@@ -718,7 +787,7 @@ networkPolicy:
   ## @param networkPolicy.ingressRules.customRules [object] Custom network policy ingress rule
   ##
   ingressRules:
-    ## mariadb backend only can be accessed from testlink
+    ## postgresql backend only can be accessed from testlink
     ##
     backendOnlyAccessibleByFrontend: false
     ## Additional custom backend selector
@@ -768,83 +837,3 @@ networkPolicy:
     ##             label: example
     ##
     customRules: {}
-
-## @section Database Parameters
-##
-
-## TODO
-## 支持多种数据库类型
-##  
-database:
-  enabled: true
-  platform: postgresql
-
-## PostgreSQL chart configuration
-## ref: https://github.com/bitnami/charts/blob/main/bitnami/mariadb/values.yaml
-##
-postgresql:
-  ## @param mariadb.enabled Deploy a PostgreSQL server to satisfy the applications database requirements
-  ## To use an external database set this to false and configure the `externalDatabase.*` parameters
-  ##
-  enabled: true
-  ## @param mariadb.architecture PostgreSQL architecture. Allowed values: `standalone` or `replication`
-  ##
-  architecture: standalone
-  ## PostgreSQL Authentication parameters
-  ## @param mariadb.auth.rootPassword PostgreSQL root password
-  ## @param mariadb.auth.database PostgreSQL custom database
-  ## @param mariadb.auth.username PostgreSQL custom user name
-  ## @param mariadb.auth.password PostgreSQL custom user password
-  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb#setting-the-root-password-on-first-run
-  ##      https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-on-first-run
-  ##      https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-user-on-first-run
-  ##
-  auth:
-    rootPassword: ""
-    database: halo
-    username: halo
-    password: ""
-  ## PostgreSQL Primary configuration
-  ##
-  primary:
-    ## PostgreSQL Primary Persistence parameters
-    ## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
-    ## @param mariadb.primary.persistence.enabled Enable persistence on PostgreSQL using PVC(s)
-    ## @param mariadb.primary.persistence.storageClass Persistent Volume storage class
-    ## @param mariadb.primary.persistence.accessModes [array] Persistent Volume access modes
-    ## @param mariadb.primary.persistence.size Persistent Volume size
-    ##
-    persistence:
-      enabled: true
-      storageClass: ""
-      accessModes:
-        - ReadWriteOnce
-      size: 8Gi
-
-## External Database Configuration
-## All of these values are only used if `mariadb.enabled=false`
-##
-externalDatabase:
-  ## @param externalDatabase.platform External Database platform
-  ##
-  platform: postgresql
-  ## @param externalDatabase.host External Database server host
-  ##
-  host: ""
-  ## @param externalDatabase.port External Database server port
-  ##
-  port: 
-  ## @param externalDatabase.user External Database username
-  ##
-  user: 
-  ## @param externalDatabase.password External Database user password
-  ##
-  password: ""
-  ## @param externalDatabase.database External Database database name
-  ##
-  database: 
-  ## @param externalDatabase.existingSecret The name of an existing secret with database credentials. Evaluated as a template
-  ## NOTE: Must contain key `database-password`
-  ## NOTE: When it's set, the `externalDatabase.password` parameter is ignored
-  ##
-  existingSecret: ""

@@ -1,0 +1,15 @@
+{
+  "name": "helm-chart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "readme": "readme-generator --values charts/halo/values.yaml --readme README.md --schema ./schema.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@bitnami/readme-generator-for-helm": "2.4.2"
+  }
+}
