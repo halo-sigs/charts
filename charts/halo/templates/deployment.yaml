@@ -130,7 +130,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ include "halo.databaseSecretName" . }}
-                  key: password
+                  key: {{ include "halo.databaseSecretKeyName" . }}
             - name: SPRING_SQL_INIT_PLATFORM
               value: {{ include "halo.databasePlatform" . | quote }}
             - name: HALO_EXTERNAL_URL
