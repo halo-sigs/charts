@@ -141,11 +141,11 @@ Return the Database Secret Name
 */}}
 {{- define "halo.databaseSecretKeyName" -}}
 {{- if .Values.postgresql.enabled }}
-    {{- printf "postgres-password" -}}
+    {{- printf "password" -}}
 {{- else if .Values.mysql.enabled }}
     {{- printf "mysql-password" -}}
 {{- else -}}
-    {{- printf "database-password" -}}
+    {{- printf "password" -}}
 {{- end -}}
 {{- end -}}
 
