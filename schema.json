@@ -1,0 +1,1166 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "imageRegistry": {
+                    "type": "string",
+                    "description": "Global Docker image registry",
+                    "default": ""
+                },
+                "imagePullSecrets": {
+                    "type": "array",
+                    "description": "Global Docker registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                },
+                "storageClass": {
+                    "type": "string",
+                    "description": "Global StorageClass for Persistent Volume(s)",
+                    "default": ""
+                }
+            }
+        },
+        "kubeVersion": {
+            "type": "string",
+            "description": "Override Kubernetes version",
+            "default": ""
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override common.names.fullname template (will maintain the release name)",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override common.names.fullname template",
+            "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Labels to add to all deployed resources",
+            "default": {}
+        },
+        "commonAnnotations": {
+            "type": "object",
+            "description": "Annotations to add to all deployed resources",
+            "default": {}
+        },
+        "clusterDomain": {
+            "type": "string",
+            "description": "Kubernetes Cluster Domain",
+            "default": "cluster.local"
+        },
+        "extraDeploy": {
+            "type": "array",
+            "description": "Array of extra objects to deploy with the release",
+            "default": [],
+            "items": {}
+        },
+        "diagnosticMode": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable diagnostic mode (all probes will be disabled and the command will be overridden)",
+                    "default": false
+                },
+                "command": {
+                    "type": "array",
+                    "description": "Command to override all containers in the deployment",
+                    "default": [
+                        "sleep"
+                    ],
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "args": {
+                    "type": "array",
+                    "description": "Args to override all containers in the deployment",
+                    "default": [
+                        "infinity"
+                    ],
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "registry": {
+                    "type": "string",
+                    "description": "Halo image registry",
+                    "default": "docker.io"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "Halo image repository",
+                    "default": "halohub/halo"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Halo image tag (immutable tags are recommended)",
+                    "default": "2.6.1"
+                },
+                "digest": {
+                    "type": "string",
+                    "description": "Halo image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag",
+                    "default": ""
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "Halo image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "description": "Halo image pull secrets",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "haloUsername": {
+            "type": "string",
+            "description": "Halo username",
+            "default": "admin"
+        },
+        "haloPassword": {
+            "type": "string",
+            "description": "Halo user password",
+            "default": ""
+        },
+        "existingSecret": {
+            "type": "string",
+            "description": "Name of existing secret containing Halo credentials",
+            "default": ""
+        },
+        "haloExternalUrl": {
+            "type": "string",
+            "description": "外部访问地址，请根据实际需要修改",
+            "default": "http://localhost:8090"
+        },
+        "haloScheme": {
+            "type": "string",
+            "description": "Scheme to use to generate Halo URLs",
+            "default": "http"
+        },
+        "command": {
+            "type": "array",
+            "description": "Override default container command (useful when using custom images)",
+            "default": [],
+            "items": {}
+        },
+        "args": {
+            "type": "array",
+            "description": "Override default container args (useful when using custom images)",
+            "default": [],
+            "items": {}
+        },
+        "extraEnvVars": {
+            "type": "array",
+            "description": "Array with extra environment variables to add to the Halo container",
+            "default": [],
+            "items": {}
+        },
+        "extraEnvVarsCM": {
+            "type": "string",
+            "description": "Name of existing ConfigMap containing extra env vars",
+            "default": ""
+        },
+        "extraEnvVarsSecret": {
+            "type": "string",
+            "description": "Name of existing Secret containing extra env vars",
+            "default": ""
+        },
+        "postgresql": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Deploy a PostgreSQL server to satisfy the applications database requirements",
+                    "default": true
+                },
+                "architecture": {
+                    "type": "string",
+                    "description": "PostgreSQL architecture. Allowed values: `standalone` or `replication`",
+                    "default": "standalone"
+                },
+                "auth": {
+                    "type": "object",
+                    "properties": {
+                        "rootPassword": {
+                            "type": "string",
+                            "description": "PostgreSQL root password",
+                            "default": ""
+                        },
+                        "database": {
+                            "type": "string",
+                            "description": "PostgreSQL custom database",
+                            "default": "halo"
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "PostgreSQL custom user name",
+                            "default": "halo"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "PostgreSQL custom user password",
+                            "default": ""
+                        }
+                    }
+                },
+                "primary": {
+                    "type": "object",
+                    "properties": {
+                        "persistence": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean",
+                                    "description": "Enable persistence on PostgreSQL using PVC(s)",
+                                    "default": true
+                                },
+                                "storageClass": {
+                                    "type": "string",
+                                    "description": "Persistent Volume storage class",
+                                    "default": ""
+                                },
+                                "accessModes": {
+                                    "type": "array",
+                                    "description": "Persistent Volume access modes",
+                                    "default": [
+                                        "ReadWriteOnce"
+                                    ],
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "size": {
+                                    "type": "string",
+                                    "description": "Persistent Volume size",
+                                    "default": "8Gi"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "mysql": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Deploy a MySQL server to satisfy the applications database requirements",
+                    "default": false
+                },
+                "architecture": {
+                    "type": "string",
+                    "description": "MySQL architecture. Allowed values: `standalone` or `replication`",
+                    "default": "standalone"
+                },
+                "auth": {
+                    "type": "object",
+                    "properties": {
+                        "rootPassword": {
+                            "type": "string",
+                            "description": "MySQL root password",
+                            "default": ""
+                        },
+                        "database": {
+                            "type": "string",
+                            "description": "MySQL custom database",
+                            "default": "halo"
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "MySQL custom user name",
+                            "default": "halo"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "MySQL custom user password",
+                            "default": ""
+                        }
+                    }
+                },
+                "primary": {
+                    "type": "object",
+                    "properties": {
+                        "persistence": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean",
+                                    "description": "Enable persistence on MySQL using PVC(s)",
+                                    "default": true
+                                },
+                                "storageClass": {
+                                    "type": "string",
+                                    "description": "Persistent Volume storage class",
+                                    "default": ""
+                                },
+                                "accessModes": {
+                                    "type": "array",
+                                    "description": "Persistent Volume access modes",
+                                    "default": [
+                                        "ReadWriteOnce"
+                                    ],
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "size": {
+                                    "type": "string",
+                                    "description": "Persistent Volume size",
+                                    "default": "8Gi"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "externalDatabase": {
+            "type": "object",
+            "properties": {
+                "platform": {
+                    "type": "string",
+                    "description": "External Database platform",
+                    "default": "postgresql"
+                },
+                "host": {
+                    "type": "string",
+                    "description": "External Database server host",
+                    "default": ""
+                },
+                "port": {
+                    "type": "string",
+                    "description": "External Database server port",
+                    "default": ""
+                },
+                "user": {
+                    "type": "string",
+                    "description": "External Database username",
+                    "default": ""
+                },
+                "password": {
+                    "type": "string",
+                    "description": "External Database user password",
+                    "default": ""
+                },
+                "database": {
+                    "type": "string",
+                    "description": "External Database database name",
+                    "default": ""
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "The name of an existing secret with database credentials. Evaluated as a template",
+                    "default": ""
+                }
+            }
+        },
+        "replicaCount": {
+            "type": "number",
+            "description": "Number of Halo replicas to deploy",
+            "default": 1
+        },
+        "updateStrategy": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Halo deployment strategy type",
+                    "default": "RollingUpdate"
+                },
+                "rollingUpdate": {
+                    "type": "object",
+                    "description": "Halo deployment rolling update configuration parameters",
+                    "default": {}
+                }
+            }
+        },
+        "schedulerName": {
+            "type": "string",
+            "description": "Alternate scheduler",
+            "default": ""
+        },
+        "topologySpreadConstraints": {
+            "type": "array",
+            "description": "Topology Spread Constraints for pod assignment spread across your cluster among failure-domains. Evaluated as a template",
+            "default": [],
+            "items": {}
+        },
+        "priorityClassName": {
+            "type": "string",
+            "description": "Name of the existing priority class to be used by Halo pods, priority class needs to be created beforehand",
+            "default": ""
+        },
+        "hostAliases": {
+            "type": "array",
+            "description": "",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "ip": {
+                        "type": "string",
+                        "description": ""
+                    },
+                    "hostnames": {
+                        "type": "array",
+                        "description": "",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumes for Halo pods",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts for Halo container(s)",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add additional sidecar containers to the Halo pod",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add additional init containers to the Halo pods",
+            "default": [],
+            "items": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Extra labels for Halo pods",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Annotations for Halo pods",
+            "default": {}
+        },
+        "podAffinityPreset": {
+            "type": "string",
+            "description": "Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`",
+            "default": ""
+        },
+        "podAntiAffinityPreset": {
+            "type": "string",
+            "description": "Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`",
+            "default": "soft"
+        },
+        "nodeAffinityPreset": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`",
+                    "default": ""
+                },
+                "key": {
+                    "type": "string",
+                    "description": "Node label key to match. Ignored if `affinity` is set",
+                    "default": ""
+                },
+                "values": {
+                    "type": "array",
+                    "description": "Node label values to match. Ignored if `affinity` is set",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
+        "resources": {
+            "type": "object",
+            "properties": {
+                "limits": {
+                    "type": "object",
+                    "description": "The resources limits for the Halo containers",
+                    "default": {}
+                },
+                "requests": {
+                    "type": "object",
+                    "properties": {
+                        "memory": {
+                            "type": "string",
+                            "description": "The requested memory for the Halo containers",
+                            "default": "512Mi"
+                        },
+                        "cpu": {
+                            "type": "string",
+                            "description": "The requested cpu for the Halo containers",
+                            "default": "300m"
+                        }
+                    }
+                }
+            }
+        },
+        "containerPorts": {
+            "type": "object",
+            "properties": {
+                "http": {
+                    "type": "number",
+                    "description": "Halo HTTP container port",
+                    "default": 8090
+                }
+            }
+        },
+        "extraContainerPorts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional ports for Halo container(s)",
+            "default": [],
+            "items": {}
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enabled Halo pods' Security Context",
+                    "default": true
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "Set Halo pod's Security Context fsGroup",
+                    "default": 1001
+                }
+            }
+        },
+        "containerSecurityContext": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enabled Halo containers' Security Context",
+                    "default": true
+                },
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set Halo container's Security Context runAsUser",
+                    "default": 1001
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set Halo container's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "allowPrivilegeEscalation": {
+                    "type": "boolean",
+                    "description": "Set Halo container's privilege escalation",
+                    "default": false
+                },
+                "capabilities": {
+                    "type": "object",
+                    "properties": {
+                        "drop": {
+                            "type": "array",
+                            "description": "Set Halo container's Security Context runAsNonRoot",
+                            "default": [
+                                "ALL"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "livenessProbe": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable livenessProbe on Halo containers",
+                    "default": true
+                },
+                "httpGet": {
+                    "type": "object",
+                    "properties": {
+                        "path": {
+                            "type": "string",
+                            "description": "",
+                            "default": "/"
+                        },
+                        "port": {
+                            "type": "string",
+                            "description": "",
+                            "default": "{{ .Values.haloScheme }}"
+                        },
+                        "scheme": {
+                            "type": "string",
+                            "description": "",
+                            "default": "{{ .Values.haloScheme | upper }}"
+                        },
+                        "httpHeaders": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
+                },
+                "initialDelaySeconds": {
+                    "type": "number",
+                    "description": "Initial delay seconds for livenessProbe",
+                    "default": 30
+                },
+                "periodSeconds": {
+                    "type": "number",
+                    "description": "Period seconds for livenessProbe",
+                    "default": 10
+                },
+                "timeoutSeconds": {
+                    "type": "number",
+                    "description": "Timeout seconds for livenessProbe",
+                    "default": 5
+                },
+                "failureThreshold": {
+                    "type": "number",
+                    "description": "Failure threshold for livenessProbe",
+                    "default": 3
+                },
+                "successThreshold": {
+                    "type": "number",
+                    "description": "Success threshold for livenessProbe",
+                    "default": 1
+                }
+            }
+        },
+        "readinessProbe": {
+            "type": "object",
+            "properties": {
+                "httpGet": {
+                    "type": "object",
+                    "properties": {
+                        "path": {
+                            "type": "string",
+                            "description": "",
+                            "default": "/"
+                        },
+                        "port": {
+                            "type": "string",
+                            "description": "",
+                            "default": "{{ .Values.haloScheme }}"
+                        },
+                        "scheme": {
+                            "type": "string",
+                            "description": "",
+                            "default": "{{ .Values.haloScheme | upper }}"
+                        },
+                        "httpHeaders": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable readinessProbe on Halo containers",
+                    "default": true
+                },
+                "initialDelaySeconds": {
+                    "type": "number",
+                    "description": "Initial delay seconds for readinessProbe",
+                    "default": 30
+                },
+                "periodSeconds": {
+                    "type": "number",
+                    "description": "Period seconds for readinessProbe",
+                    "default": 10
+                },
+                "timeoutSeconds": {
+                    "type": "number",
+                    "description": "Timeout seconds for readinessProbe",
+                    "default": 5
+                },
+                "failureThreshold": {
+                    "type": "number",
+                    "description": "Failure threshold for readinessProbe",
+                    "default": 3
+                },
+                "successThreshold": {
+                    "type": "number",
+                    "description": "Success threshold for readinessProbe",
+                    "default": 1
+                }
+            }
+        },
+        "startupProbe": {
+            "type": "object",
+            "properties": {
+                "httpGet": {
+                    "type": "object",
+                    "properties": {
+                        "path": {
+                            "type": "string",
+                            "description": "",
+                            "default": "/"
+                        },
+                        "port": {
+                            "type": "string",
+                            "description": "",
+                            "default": "{{ .Values.haloScheme }}"
+                        },
+                        "scheme": {
+                            "type": "string",
+                            "description": "",
+                            "default": "{{ .Values.haloScheme | upper }}"
+                        },
+                        "httpHeaders": {
+                            "type": "array",
+                            "description": "",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable startupProbe on Halo containers",
+                    "default": false
+                },
+                "initialDelaySeconds": {
+                    "type": "number",
+                    "description": "Initial delay seconds for startupProbe",
+                    "default": 10
+                },
+                "periodSeconds": {
+                    "type": "number",
+                    "description": "Period seconds for startupProbe",
+                    "default": 5
+                },
+                "timeoutSeconds": {
+                    "type": "number",
+                    "description": "Timeout seconds for startupProbe",
+                    "default": 3
+                },
+                "failureThreshold": {
+                    "type": "number",
+                    "description": "Failure threshold for startupProbe",
+                    "default": 3
+                },
+                "successThreshold": {
+                    "type": "number",
+                    "description": "Success threshold for startupProbe",
+                    "default": 1
+                }
+            }
+        },
+        "customLivenessProbe": {
+            "type": "object",
+            "description": "Custom livenessProbe that overrides the default one",
+            "default": {}
+        },
+        "customReadinessProbe": {
+            "type": "object",
+            "description": "Custom readinessProbe that overrides the default one",
+            "default": {}
+        },
+        "customStartupProbe": {
+            "type": "object",
+            "description": "Custom startupProbe that overrides the default one",
+            "default": {}
+        },
+        "lifecycleHooks": {
+            "type": "object",
+            "description": "for the Halo container(s) to automate configuration before or after startup",
+            "default": {}
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Halo service type",
+                    "default": "NodePort"
+                },
+                "ports": {
+                    "type": "object",
+                    "properties": {
+                        "http": {
+                            "type": "number",
+                            "description": "Halo service HTTP port",
+                            "default": 80
+                        }
+                    }
+                },
+                "nodePorts": {
+                    "type": "object",
+                    "properties": {
+                        "http": {
+                            "type": "string",
+                            "description": "Node port for HTTP",
+                            "default": ""
+                        }
+                    }
+                },
+                "sessionAffinity": {
+                    "type": "string",
+                    "description": "Control where client requests go, to the same pod or round-robin",
+                    "default": "None"
+                },
+                "sessionAffinityConfig": {
+                    "type": "object",
+                    "description": "Additional settings for the sessionAffinity",
+                    "default": {}
+                },
+                "clusterIP": {
+                    "type": "string",
+                    "description": "Halo service Cluster IP",
+                    "default": ""
+                },
+                "loadBalancerIP": {
+                    "type": "string",
+                    "description": "Halo service Load Balancer IP",
+                    "default": ""
+                },
+                "loadBalancerSourceRanges": {
+                    "type": "array",
+                    "description": "Halo service Load Balancer sources",
+                    "default": [],
+                    "items": {}
+                },
+                "externalTrafficPolicy": {
+                    "type": "string",
+                    "description": "Halo service external traffic policy",
+                    "default": "Cluster"
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for Halo service",
+                    "default": {}
+                },
+                "extraPorts": {
+                    "type": "array",
+                    "description": "Extra port to expose on Halo service",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "ingress": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable ingress record generation for Halo",
+                    "default": false
+                },
+                "pathType": {
+                    "type": "string",
+                    "description": "Ingress path type",
+                    "default": "ImplementationSpecific"
+                },
+                "apiVersion": {
+                    "type": "string",
+                    "description": "Force Ingress API version (automatically detected if not set)",
+                    "default": ""
+                },
+                "ingressClassName": {
+                    "type": "string",
+                    "description": "IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)",
+                    "default": ""
+                },
+                "hostname": {
+                    "type": "string",
+                    "description": "Default host for the ingress record",
+                    "default": "halo.local"
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Default path for the ingress record",
+                    "default": "/"
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.",
+                    "default": {}
+                },
+                "tls": {
+                    "type": "boolean",
+                    "description": "Enable TLS configuration for the host defined at `ingress.hostname` parameter",
+                    "default": false
+                },
+                "selfSigned": {
+                    "type": "boolean",
+                    "description": "Create a TLS secret for this ingress record using self-signed certificates generated by Helm",
+                    "default": false
+                },
+                "extraHosts": {
+                    "type": "array",
+                    "description": "An array with additional hostname(s) to be covered with the ingress record",
+                    "default": [],
+                    "items": {}
+                },
+                "extraPaths": {
+                    "type": "array",
+                    "description": "An array with additional arbitrary paths that may need to be added to the ingress under the main host",
+                    "default": [],
+                    "items": {}
+                },
+                "extraTls": {
+                    "type": "array",
+                    "description": "TLS configuration for additional hostname(s) to be covered with this ingress record",
+                    "default": [],
+                    "items": {}
+                },
+                "secrets": {
+                    "type": "array",
+                    "description": "Custom TLS certificates as secrets",
+                    "default": [],
+                    "items": {}
+                },
+                "extraRules": {
+                    "type": "array",
+                    "description": "Additional rules to be covered with this ingress record",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "persistence": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable persistence using Persistent Volume Claims",
+                    "default": true
+                },
+                "storageClass": {
+                    "type": "string",
+                    "description": "Persistent Volume storage class",
+                    "default": ""
+                },
+                "accessModes": {
+                    "type": "array",
+                    "description": "Persistent Volume access modes",
+                    "default": [
+                        "ReadWriteOnce"
+                    ],
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "size": {
+                    "type": "string",
+                    "description": "Persistent Volume size",
+                    "default": "10Gi"
+                },
+                "dataSource": {
+                    "type": "object",
+                    "description": "Custom PVC data source",
+                    "default": {}
+                },
+                "existingClaim": {
+                    "type": "string",
+                    "description": "The name of an existing PVC to use for persistence",
+                    "default": ""
+                },
+                "selector": {
+                    "type": "object",
+                    "description": "Selector to match an existing Persistent Volume for Halo data PVC",
+                    "default": {}
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Persistent Volume Claim annotations",
+                    "default": {}
+                }
+            }
+        },
+        "volumePermissions": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable init container that changes the owner/group of the PV mount point to `runAsUser:fsGroup`",
+                    "default": false
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "registry": {
+                            "type": "string",
+                            "description": "Bitnami Shell image registry",
+                            "default": "docker.io"
+                        },
+                        "repository": {
+                            "type": "string",
+                            "description": "Bitnami Shell image repository",
+                            "default": "bitnami/bitnami-shell"
+                        },
+                        "tag": {
+                            "type": "string",
+                            "description": "Bitnami Shell image tag (immutable tags are recommended)",
+                            "default": "11-debian-11-r59"
+                        },
+                        "digest": {
+                            "type": "string",
+                            "description": "Bitnami Shell image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag",
+                            "default": ""
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "Bitnami Shell image pull policy",
+                            "default": "IfNotPresent"
+                        },
+                        "pullSecrets": {
+                            "type": "array",
+                            "description": "Bitnami Shell image pull secrets",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
+                },
+                "resources": {
+                    "type": "object",
+                    "properties": {
+                        "limits": {
+                            "type": "object",
+                            "description": "The resources limits for the init container",
+                            "default": {}
+                        },
+                        "requests": {
+                            "type": "object",
+                            "description": "The requested resources for the init container",
+                            "default": {}
+                        }
+                    }
+                },
+                "containerSecurityContext": {
+                    "type": "object",
+                    "properties": {
+                        "runAsUser": {
+                            "type": "number",
+                            "description": "User ID for the init container",
+                            "default": 0
+                        }
+                    }
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Enable creation of ServiceAccount for Halo pod",
+                    "default": false
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the ServiceAccount to use.",
+                    "default": ""
+                },
+                "automountServiceAccountToken": {
+                    "type": "boolean",
+                    "description": "Allows auto mount of ServiceAccountToken on the serviceAccount created",
+                    "default": true
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                }
+            }
+        },
+        "networkPolicy": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable network policies",
+                    "default": false
+                },
+                "metrics": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Enable network policy for metrics (prometheus)",
+                            "default": false
+                        }
+                    }
+                },
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Enable network policy for Ingress Proxies",
+                            "default": false
+                        }
+                    }
+                },
+                "ingressRules": {
+                    "type": "object",
+                    "properties": {
+                        "backendOnlyAccessibleByFrontend": {
+                            "type": "boolean",
+                            "description": "Enable ingress rule that makes the backend (postgresql) only accessible by testlink's pods.",
+                            "default": false
+                        },
+                        "accessOnlyFrom": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean",
+                                    "description": "Enable ingress rule that makes testlink only accessible from a particular origin",
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "egressRules": {
+                    "type": "object",
+                    "properties": {
+                        "denyConnectionsToExternal": {
+                            "type": "boolean",
+                            "description": "Enable egress rule that denies outgoing traffic outside the cluster, except for DNS (port 53).",
+                            "default": false
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

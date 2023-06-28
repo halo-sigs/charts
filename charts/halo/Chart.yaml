@@ -1,8 +1,8 @@
 annotations:
   category: CMS
 apiVersion: v2
-appVersion: 2.0.1
-version: 1.0.1
+appVersion: 2.6.1
+version: 1.1.0
 description: A Helm chart to deploy Halo
 home: https://halo.run
 icon: https://halo.run/logo
@@ -22,3 +22,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     version: 12.x.x
     condition: postgresql.enabled
+  - name: mysql
+    repository: https://charts.bitnami.com/bitnami
+    version: 9.x.x
+    condition: mysql.enabled

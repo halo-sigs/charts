@@ -72,7 +72,7 @@ diagnosticMode:
 image:
   registry: docker.io
   repository: halohub/halo
-  tag: 2.0.1
+  tag: 2.6.1
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -105,6 +105,9 @@ haloPassword: ""
 ## NOTE: When it's set, the `haloPassword` parameter is ignored
 ##
 existingSecret: ""
+## @param haloExternalUrl 外部访问地址，请根据实际需要修改
+##
+haloExternalUrl: "http://localhost:8090"
 ## @param haloScheme Scheme to use to generate Halo URLs
 ##
 haloScheme: http
@@ -173,6 +176,48 @@ postgresql:
         - ReadWriteOnce
       size: 8Gi
 
+## MySQL chart configuration
+## ref: https://github.com/bitnami/charts/blob/main/bitnami/mysql/values.yaml
+##
+mysql:
+  ## @param mysql.enabled Deploy a MySQL server to satisfy the applications database requirements
+  ## To use an external database set this to false and configure the `externalDatabase.*` parameters
+  ##
+  enabled: false
+  ## @param mysql.architecture MySQL architecture. Allowed values: `standalone` or `replication`
+  ##
+  architecture: standalone
+  ## MySQL Authentication parameters
+  ## @param mysql.auth.rootPassword MySQL root password
+  ## @param mysql.auth.database MySQL custom database
+  ## @param mysql.auth.username MySQL custom user name
+  ## @param mysql.auth.password MySQL custom user password
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mysql#setting-the-root-password-on-first-run
+  ##      https://github.com/bitnami/containers/blob/main/bitnami/mysql/README.md#creating-a-database-on-first-run
+  ##      https://github.com/bitnami/containers/blob/main/bitnami/mysql/README.md#creating-a-database-user-on-first-run
+  ##
+  auth:
+    rootPassword: ""
+    database: halo
+    username: halo
+    password: ""
+  ## MySQL Primary configuration
+  ##
+  primary:
+    ## MySQL Primary Persistence parameters
+    ## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+    ## @param mysql.primary.persistence.enabled Enable persistence on MySQL using PVC(s)
+    ## @param mysql.primary.persistence.storageClass Persistent Volume storage class
+    ## @param mysql.primary.persistence.accessModes [array] Persistent Volume access modes
+    ## @param mysql.primary.persistence.size Persistent Volume size
+    ##
+    persistence:
+      enabled: true
+      storageClass: ""
+      accessModes:
+        - ReadWriteOnce
+      size: 8Gi
+
 ## External Database Configuration
 ## All of these values are only used if `postgresql.enabled=false`
 ##
@@ -196,7 +241,7 @@ externalDatabase:
   ##
   database: ""
   ## @param externalDatabase.existingSecret The name of an existing secret with database credentials. Evaluated as a template
-  ## NOTE: Must contain key `database-password`
+  ## NOTE: Must contain key `password`
   ## NOTE: When it's set, the `externalDatabase.password` parameter is ignored
   ##
   existingSecret: ""
