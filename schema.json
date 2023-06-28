@@ -184,7 +184,7 @@
                 "enabled": {
                     "type": "boolean",
                     "description": "Deploy a PostgreSQL server to satisfy the applications database requirements",
-                    "default": false
+                    "default": true
                 },
                 "architecture": {
                     "type": "string",
@@ -259,7 +259,7 @@
                 "enabled": {
                     "type": "boolean",
                     "description": "Deploy a MySQL server to satisfy the applications database requirements",
-                    "default": true
+                    "default": false
                 },
                 "architecture": {
                     "type": "string",

@@ -72,7 +72,7 @@ helm install halo halo/halo
 
 | Name                                          | Description                                                                       | Value        |
 | --------------------------------------------- | --------------------------------------------------------------------------------- | ------------ |
-| `postgresql.enabled`                          | Deploy a PostgreSQL server to satisfy the applications database requirements      | `false`      |
+| `postgresql.enabled`                          | Deploy a PostgreSQL server to satisfy the applications database requirements      | `true`       |
 | `postgresql.architecture`                     | PostgreSQL architecture. Allowed values: `standalone` or `replication`            | `standalone` |
 | `postgresql.auth.rootPassword`                | PostgreSQL root password                                                          | `""`         |
 | `postgresql.auth.database`                    | PostgreSQL custom database                                                        | `halo`       |
@@ -82,7 +82,7 @@ helm install halo halo/halo
 | `postgresql.primary.persistence.storageClass` | Persistent Volume storage class                                                   | `""`         |
 | `postgresql.primary.persistence.accessModes`  | Persistent Volume access modes                                                    | `[]`         |
 | `postgresql.primary.persistence.size`         | Persistent Volume size                                                            | `8Gi`        |
-| `mysql.enabled`                               | Deploy a MySQL server to satisfy the applications database requirements           | `true`       |
+| `mysql.enabled`                               | Deploy a MySQL server to satisfy the applications database requirements           | `false`      |
 | `mysql.architecture`                          | MySQL architecture. Allowed values: `standalone` or `replication`                 | `standalone` |
 | `mysql.auth.rootPassword`                     | MySQL root password                                                               | `""`         |
 | `mysql.auth.database`                         | MySQL custom database                                                             | `halo`       |

@@ -141,7 +141,7 @@ postgresql:
   ## @param postgresql.enabled Deploy a PostgreSQL server to satisfy the applications database requirements
   ## To use an external database set this to false and configure the `externalDatabase.*` parameters
   ##
-  enabled: false
+  enabled: true
   ## @param postgresql.architecture PostgreSQL architecture. Allowed values: `standalone` or `replication`
   ##
   architecture: standalone
@@ -183,7 +183,7 @@ mysql:
   ## @param mysql.enabled Deploy a MySQL server to satisfy the applications database requirements
   ## To use an external database set this to false and configure the `externalDatabase.*` parameters
   ##
-  enabled: true
+  enabled: false
   ## @param mysql.architecture MySQL architecture. Allowed values: `standalone` or `replication`
   ##
   architecture: standalone
