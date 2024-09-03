@@ -142,7 +142,7 @@ spec:
             - name: SPRING_SQL_INIT_PLATFORM
               value: {{ include "halo.databasePlatform" . | quote }}
             - name: HALO_EXTERNAL_URL
-              value: http://localhost:8090/
+              value: {{ .Values.haloExternalUrl | quote }}
             - name: HALO_SECURITY_INITIALIZER_SUPERADMINUSERNAME
               value: {{ .Values.haloUsername | quote }}
             - name: HALO_SECURITY_INITIALIZER_SUPERADMINPASSWORD
