@@ -23,7 +23,6 @@ helm install halo halo/halo
 | `global.imagePullSecrets` | Global Docker registry secret names as an array | `[]`  |
 | `global.storageClass`     | Global StorageClass for Persistent Volume(s)    | `""`  |
 
-
 ### Common parameters
 
 | Name                     | Description                                                                                  | Value           |
@@ -39,26 +38,21 @@ helm install halo halo/halo
 | `diagnosticMode.command` | Command to override all containers in the deployment                                         | `["sleep"]`     |
 | `diagnosticMode.args`    | Args to override all containers in the deployment                                            | `["infinity"]`  |
 
-
 ### Halo Image parameters
 
 | Name                | Description                                                                                          | Value          |
 | ------------------- | ---------------------------------------------------------------------------------------------------- | -------------- |
 | `image.registry`    | Halo image registry                                                                                  | `docker.io`    |
 | `image.repository`  | Halo image repository                                                                                | `halohub/halo` |
-| `image.tag`         | Halo image tag (immutable tags are recommended)                                                      | `2.6.1`        |
+| `image.tag`         | Halo image tag (immutable tags are recommended)                                                      | `2.19.0`       |
 | `image.digest`      | Halo image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag | `""`           |
 | `image.pullPolicy`  | Halo image pull policy                                                                               | `IfNotPresent` |
 | `image.pullSecrets` | Halo image pull secrets                                                                              | `[]`           |
-
 
 ### Halo Configuration parameters
 
 | Name                 | Description                                                          | Value                   |
 | -------------------- | -------------------------------------------------------------------- | ----------------------- |
-| `haloUsername`       | Halo username                                                        | `admin`                 |
-| `haloPassword`       | Halo user password                                                   | `""`                    |
-| `existingSecret`     | Name of existing secret containing Halo credentials                  | `""`                    |
 | `haloExternalUrl`    | 外部访问地址，请根据实际需要修改                                                     | `http://localhost:8090` |
 | `haloScheme`         | Scheme to use to generate Halo URLs                                  | `http`                  |
 | `command`            | Override default container command (useful when using custom images) | `[]`                    |
@@ -66,7 +60,6 @@ helm install halo halo/halo
 | `extraEnvVars`       | Array with extra environment variables to add to the Halo container  | `[]`                    |
 | `extraEnvVarsCM`     | Name of existing ConfigMap containing extra env vars                 | `""`                    |
 | `extraEnvVarsSecret` | Name of existing Secret containing extra env vars                    | `""`                    |
-
 
 ### Database Parameters
 
@@ -99,7 +92,6 @@ helm install halo halo/halo
 | `externalDatabase.password`                   | External Database user password                                                   | `""`         |
 | `externalDatabase.database`                   | External Database database name                                                   | `""`         |
 | `externalDatabase.existingSecret`             | The name of an existing secret with database credentials. Evaluated as a template | `""`         |
-
 
 ### Halo deployment parameters
 
@@ -161,7 +153,6 @@ helm install halo halo/halo
 | `customStartupProbe`                                | Custom startupProbe that overrides the default one                                                                       | `{}`            |
 | `lifecycleHooks`                                    | for the Halo container(s) to automate configuration before or after startup                                              | `{}`            |
 
-
 ### Traffic Exposure Parameters
 
 | Name                               | Description                                                                                                                      | Value                    |
@@ -192,7 +183,6 @@ helm install halo halo/halo
 | `ingress.secrets`                  | Custom TLS certificates as secrets                                                                                               | `[]`                     |
 | `ingress.extraRules`               | Additional rules to be covered with this ingress record                                                                          | `[]`                     |
 
-
 ### Persistence Parameters
 
 | Name                                                   | Description                                                                                                   | Value                   |
@@ -216,7 +206,6 @@ helm install halo halo/halo
 | `volumePermissions.resources.requests`                 | The requested resources for the init container                                                                | `{}`                    |
 | `volumePermissions.containerSecurityContext.runAsUser` | User ID for the init container                                                                                | `0`                     |
 
-
 ### Other Parameters
 
 | Name                                          | Description                                                            | Value   |
@@ -225,7 +214,6 @@ helm install halo halo/halo
 | `serviceAccount.name`                         | The name of the ServiceAccount to use.                                 | `""`    |
 | `serviceAccount.automountServiceAccountToken` | Allows auto mount of ServiceAccountToken on the serviceAccount created | `true`  |
 | `serviceAccount.annotations`                  | Additional custom annotations for the ServiceAccount                   | `{}`    |
-
 
 ### NetworkPolicy parameters
 

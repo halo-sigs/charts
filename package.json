@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@bitnami/readme-generator-for-helm": "2.4.2"
+    "@bitnami/readme-generator-for-helm": "2.6.1"
   }
 }
