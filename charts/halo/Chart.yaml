@@ -1,17 +1,18 @@
 annotations:
-  category: CMS
+  category: WebsiteBuilder, CMS, Blog
 apiVersion: v2
-appVersion: 2.6.1
-version: 1.1.0
+appVersion: 2.19.0
+version: 1.2.0
 description: A Helm chart to deploy Halo
-home: https://halo.run
-icon: https://halo.run/logo
+home: https://www.halo.run
+icon: https://www.halo.run/logo
 maintainers:
-  - email: halo-dev@halo.run
-    name: halo-dev
+  - email: hi@halo.run
+    name: Halo Team
 name: halo
 sources:
-  - https://github.com/halo/
+  - https://github.com/halo-sigs/charts
+  - https://github.com/halo-dev/halo
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
