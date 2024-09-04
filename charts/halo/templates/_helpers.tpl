@@ -157,17 +157,6 @@ Return the R2DBC URL
 {{- end -}}
 
 {{/*
-Return the Halo Secret Name
-*/}}
-{{- define "halo.secretName" -}}
-{{- if .Values.existingSecret }}
-    {{- printf "%s" .Values.existingSecret -}}
-{{- else -}}
-    {{- printf "%s" (include "common.names.fullname" .) -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
 Compile all warnings into a single message.
 */}}
 {{- define "halo.validateValues" -}}

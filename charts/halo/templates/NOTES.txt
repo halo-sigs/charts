@@ -70,11 +70,6 @@ To access your Halo site from outside the cluster follow the steps below:
 
 2. Open a browser and access Halo using the obtained URL.
 
-3. Login with the following credentials below to see your site:
-
-  echo Username: {{ .Values.haloUsername }}
-  echo Password: $(kubectl get secret --namespace {{ .Release.Namespace }} {{ include "common.names.fullname" . }} -o jsonpath="{.data.halo-password}" | base64 -d)
-
 {{- end }}
 
 {{- include "halo.validateValues" . }}

@@ -56,10 +56,7 @@ helm install halo halo/halo
 
 | Name                 | Description                                                          | Value                   |
 | -------------------- | -------------------------------------------------------------------- | ----------------------- |
-| `haloUsername`       | Halo username                                                        | `admin`                 |
-| `haloPassword`       | Halo user password                                                   | `""`                    |
-| `existingSecret`     | Name of existing secret containing Halo credentials                  | `""`                    |
-| `haloExternalUrl`    | 外部访问地址，请根据实际需要修改                                                     | `http://localhost:8090` |
+| `haloExternalUrl`    | 外部访问地址，请根据实际需要修改                                          | `http://localhost:8090` |
 | `haloScheme`         | Scheme to use to generate Halo URLs                                  | `http`                  |
 | `command`            | Override default container command (useful when using custom images) | `[]`                    |
 | `args`               | Override default container args (useful when using custom images)    | `[]`                    |

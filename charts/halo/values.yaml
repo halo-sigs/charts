@@ -72,7 +72,7 @@ diagnosticMode:
 image:
   registry: docker.io
   repository: halohub/halo
-  tag: 2.6.1
+  tag: 2.19.0
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -93,18 +93,6 @@ image:
 ## ref: https://github.com/bitnami/containers/tree/main/bitnami/halo#environment-variables
 ##
 
-## @param haloUsername Halo username
-##
-haloUsername: admin
-## @param haloPassword Halo user password
-## Defaults to a random 10-character alphanumeric string if not set
-##
-haloPassword: ""
-## @param existingSecret Name of existing secret containing Halo credentials
-## NOTE: Must contain key `halo-password`
-## NOTE: When it's set, the `haloPassword` parameter is ignored
-##
-existingSecret: ""
 ## @param haloExternalUrl 外部访问地址，请根据实际需要修改
 ##
 haloExternalUrl: "http://localhost:8090"
