@@ -105,7 +105,7 @@
                 "tag": {
                     "type": "string",
                     "description": "Halo image tag (immutable tags are recommended)",
-                    "default": "2.6.1"
+                    "default": "2.19.0"
                 },
                 "digest": {
                     "type": "string",
@@ -124,21 +124,6 @@
                     "items": {}
                 }
             }
-        },
-        "haloUsername": {
-            "type": "string",
-            "description": "Halo username",
-            "default": "admin"
-        },
-        "haloPassword": {
-            "type": "string",
-            "description": "Halo user password",
-            "default": ""
-        },
-        "existingSecret": {
-            "type": "string",
-            "description": "Name of existing secret containing Halo credentials",
-            "default": ""
         },
         "haloExternalUrl": {
             "type": "string",
@@ -235,9 +220,7 @@
                                 "accessModes": {
                                     "type": "array",
                                     "description": "Persistent Volume access modes",
-                                    "default": [
-                                        "ReadWriteOnce"
-                                    ],
+                                    "default": "[]",
                                     "items": {
                                         "type": "string"
                                     }
@@ -310,9 +293,7 @@
                                 "accessModes": {
                                     "type": "array",
                                     "description": "Persistent Volume access modes",
-                                    "default": [
-                                        "ReadWriteOnce"
-                                    ],
+                                    "default": "[]",
                                     "items": {
                                         "type": "string"
                                     }
@@ -406,22 +387,10 @@
         },
         "hostAliases": {
             "type": "array",
-            "description": "",
+            "description": "Halo pod host aliases",
+            "default": "[]",
             "items": {
-                "type": "object",
-                "properties": {
-                    "ip": {
-                        "type": "string",
-                        "description": ""
-                    },
-                    "hostnames": {
-                        "type": "array",
-                        "description": "",
-                        "items": {
-                            "type": "string"
-                        }
-                    }
-                }
+                "type": "string"
             }
         },
         "extraVolumes": {
@@ -609,32 +578,6 @@
                     "description": "Enable livenessProbe on Halo containers",
                     "default": true
                 },
-                "httpGet": {
-                    "type": "object",
-                    "properties": {
-                        "path": {
-                            "type": "string",
-                            "description": "",
-                            "default": "/"
-                        },
-                        "port": {
-                            "type": "string",
-                            "description": "",
-                            "default": "{{ .Values.haloScheme }}"
-                        },
-                        "scheme": {
-                            "type": "string",
-                            "description": "",
-                            "default": "{{ .Values.haloScheme | upper }}"
-                        },
-                        "httpHeaders": {
-                            "type": "array",
-                            "description": "",
-                            "default": [],
-                            "items": {}
-                        }
-                    }
-                },
                 "initialDelaySeconds": {
                     "type": "number",
                     "description": "Initial delay seconds for livenessProbe",
@@ -665,32 +608,6 @@
         "readinessProbe": {
             "type": "object",
             "properties": {
-                "httpGet": {
-                    "type": "object",
-                    "properties": {
-                        "path": {
-                            "type": "string",
-                            "description": "",
-                            "default": "/"
-                        },
-                        "port": {
-                            "type": "string",
-                            "description": "",
-                            "default": "{{ .Values.haloScheme }}"
-                        },
-                        "scheme": {
-                            "type": "string",
-                            "description": "",
-                            "default": "{{ .Values.haloScheme | upper }}"
-                        },
-                        "httpHeaders": {
-                            "type": "array",
-                            "description": "",
-                            "default": [],
-                            "items": {}
-                        }
-                    }
-                },
                 "enabled": {
                     "type": "boolean",
                     "description": "Enable readinessProbe on Halo containers",
@@ -726,32 +643,6 @@
         "startupProbe": {
             "type": "object",
             "properties": {
-                "httpGet": {
-                    "type": "object",
-                    "properties": {
-                        "path": {
-                            "type": "string",
-                            "description": "",
-                            "default": "/"
-                        },
-                        "port": {
-                            "type": "string",
-                            "description": "",
-                            "default": "{{ .Values.haloScheme }}"
-                        },
-                        "scheme": {
-                            "type": "string",
-                            "description": "",
-                            "default": "{{ .Values.haloScheme | upper }}"
-                        },
-                        "httpHeaders": {
-                            "type": "array",
-                            "description": "",
-                            "default": [],
-                            "items": {}
-                        }
-                    }
-                },
                 "enabled": {
                     "type": "boolean",
                     "description": "Enable startupProbe on Halo containers",
@@ -972,9 +863,7 @@
                 "accessModes": {
                     "type": "array",
                     "description": "Persistent Volume access modes",
-                    "default": [
-                        "ReadWriteOnce"
-                    ],
+                    "default": "[]",
                     "items": {
                         "type": "string"
                     }
