@@ -408,7 +408,7 @@ containerSecurityContext:
 livenessProbe:
   enabled: true
   httpGet:
-    path: /actuator/health
+    path: /actuator/health/liveness
     port: "{{ .Values.haloScheme }}"
     scheme: "{{ .Values.haloScheme | upper }}"
     ## If using an HTTPS-terminating load-balancer, the probes may need to behave
@@ -437,7 +437,7 @@ livenessProbe:
 readinessProbe:
   enabled: true
   httpGet:
-    path: /actuator/health
+    path: /actuator/health/readiness
     port: "{{ .Values.haloScheme }}"
     scheme: "{{ .Values.haloScheme | upper }}"
     ## If using an HTTPS-terminating load-balancer, the probes may need to behave
