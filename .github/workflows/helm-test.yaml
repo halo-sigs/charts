@@ -23,6 +23,9 @@ jobs:
     - name: Create halo namespace
       run: kubectl create namespace halo
 
+    - name: Build chart dependencies
+      run: helm dependency build ./charts/halo
+
     - name: Install Halo chart
       run: |
         helm install halo ./charts/halo \
