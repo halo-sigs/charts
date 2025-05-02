@@ -6,29 +6,57 @@ on:
       - main
     paths:
       - "charts/halo/Chart.yaml"
-  workflow_dispatch:
-  
+  workflow_dispatch: {}
 
 jobs:
   release:
     runs-on: ubuntu-latest
+
     steps:
+      # 1. 签出带完整历史的代码
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # 2. 配置 Git 用户（用于后续 push）
       - name: Configure Git
         run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name  "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
 
+      # 3. 确保 gh‑pages 分支存在且是空白的
+      - name: Ensure clean gh-pages branch
+        run: |
+          # 尝试获取远端 gh-pages（若不存在也不要报错）
+          git fetch origin gh-pages || true
+          # 切换到 gh-pages；若本地不存在，则创建孤儿分支
+          git checkout gh-pages || git checkout --orphan gh-pages
+          # 清空工作区所有文件，保证这是一个空白分支
+          git rm -rf . || true
+          # 防止 GitHub Pages 忽略下划线目录
+          echo .nojekyll > .nojekyll
+          git add .nojekyll
+          git commit -m "Initialize empty gh-pages branch" || true
+          # 推送并创建远端分支
+          git push origin gh-pages
+          # 切回主分支，准备后续打包
+          git checkout main
+
+      # 4. 安装 Helm（chart-releaser 依赖）
       - name: Install Helm
         uses: azure/setup-helm@v4.2.0
         with:
           version: v3.15.4
 
+      # 5. 运行 chart-releaser-action，将 chart 打包、打 tag、更新 index.yaml 并推到 gh-pages
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
+        with:
+          # 指定存放待发布 Chart 的目录
+          charts_dir: charts
+          # 指定用于发布的 Pages 分支（默认为 gh-pages，可写可不写）:contentReference[oaicite:0]{index=0}
+          pages_branch: gh-pages
         env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          # 使用 Actions 自动生成的 GITHUB_TOKEN 即可完成打 tag / push 等权限操作
+          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
