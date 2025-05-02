@@ -8,7 +8,6 @@ on:
       - "charts/halo/Chart.yaml"
   workflow_dispatch:
   
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -20,8 +19,21 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+      # —— 新增这一步：如不存在则建分支 —— 
+      - name: Ensure gh-pages branch exists
+        run: |
+          # 尝试 fetch；若远端无此分支也不要报错
+          git fetch origin gh-pages || true
+          # 本地切换到 gh-pages，若不存在则创建孤儿分支
+          git checkout gh-pages || git checkout --orphan gh-pages
+          # 提交空改动（若全新分支），并推送
+          git commit --allow-empty -m "Initialize gh-pages branch" || true
+          git push origin gh-pages
+          # 切回主分支继续
+          git checkout main
 
       - name: Install Helm
         uses: azure/setup-helm@v4.2.0
@@ -30,5 +42,8 @@ jobs:
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
+        with:
+          charts_dir: charts
+          pages_branch: gh-pages    # 默认就是 gh-pages，可省略
         env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
