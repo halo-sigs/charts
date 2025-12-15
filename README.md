@@ -44,7 +44,7 @@ helm install halo halo/halo
 | ------------------- | ---------------------------------------------------------------------------------------------------- | -------------- |
 | `image.registry`    | Halo image registry                                                                                  | `docker.io`    |
 | `image.repository`  | Halo image repository                                                                                | `halohub/halo` |
-| `image.tag`         | Halo image tag (immutable tags are recommended)                                                      | `2.19.0`       |
+| `image.tag`         | Halo image tag (immutable tags are recommended)                                                      | `2.21.10`      |
 | `image.digest`      | Halo image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag | `""`           |
 | `image.pullPolicy`  | Halo image pull policy                                                                               | `IfNotPresent` |
 | `image.pullSecrets` | Halo image pull secrets                                                                              | `[]`           |
