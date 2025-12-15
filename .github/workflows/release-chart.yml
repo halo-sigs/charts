@@ -1,13 +1,7 @@
 name: Release Charts
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "charts/halo/Chart.yaml"
   workflow_dispatch:
-  
 
 jobs:
   release:
