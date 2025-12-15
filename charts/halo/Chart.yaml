@@ -21,9 +21,9 @@ dependencies:
     version: 2.x.x
   - name: postgresql
     repository: https://charts.bitnami.com/bitnami
-    version: 17.x.x
+    version: 18.x.x
     condition: postgresql.enabled
   - name: mysql
     repository: https://charts.bitnami.com/bitnami
-    version: 13.x.x
+    version: 14.x.x
     condition: mysql.enabled
